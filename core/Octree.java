@@ -29,11 +29,18 @@ public class Octree {
         double midX = (bounds.minX + bounds.maxX) / 2;
         double midY = (bounds.minY + bounds.maxY) / 2;
         double midZ = (bounds.minZ + bounds.maxZ) / 2;
-
+    
         children = new Octree[8];
+        // Initialize ALL 8 children
         children[0] = new Octree(new AABB(bounds.minX, bounds.minY, bounds.minZ, midX, midY, midZ));
         children[1] = new Octree(new AABB(midX, bounds.minY, bounds.minZ, bounds.maxX, midY, midZ));
-        // ... (define all 8 children)
+        children[2] = new Octree(new AABB(bounds.minX, midY, bounds.minZ, midX, bounds.maxY, midZ));
+        children[3] = new Octree(new AABB(midX, midY, bounds.minZ, bounds.maxX, bounds.maxY, midZ));
+        children[4] = new Octree(new AABB(bounds.minX, bounds.minY, midZ, midX, midY, bounds.maxZ));
+        children[5] = new Octree(new AABB(midX, bounds.minY, midZ, bounds.maxX, midY, bounds.maxZ));
+        children[6] = new Octree(new AABB(bounds.minX, midY, midZ, midX, bounds.maxY, bounds.maxZ));
+        children[7] = new Octree(new AABB(midX, midY, midZ, bounds.maxX, bounds.maxY, bounds.maxZ));
+        
         isDivided = true;
     }
 

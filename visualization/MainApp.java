@@ -10,13 +10,20 @@ public class MainApp extends Application {
         launch(args);
     }
 
+    
     @Override
-    public void start(Stage stage) {
+public void start(Stage stage) {
+    try {
         CollisionViewer viewer = new CollisionViewer();
         Scene scene = new Scene(viewer.createContent(), 800, 600, true);
-        scene.setCamera(new PerspectiveCamera());
+        PerspectiveCamera camera = new PerspectiveCamera(true);
+        camera.setTranslateZ(-100);
+        scene.setCamera(camera);
         stage.setScene(scene);
-        stage.setTitle("3D Collision Detection");
         stage.show();
+    } catch (Exception e) {
+        e.printStackTrace();
+        System.exit(1);
     }
+}
 }

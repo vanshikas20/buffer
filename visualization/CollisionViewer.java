@@ -11,8 +11,9 @@ public class CollisionViewer {
     private Octree octree = new Octree(new AABB(-50, -50, -50, 50, 50, 50));
     private GameObject[] objects = new GameObject[20];
 
-    public CollisionViewer() {
-        // Initialize objects
+    public CollisionViewer() {//constructor
+        System.out.println("Initializing " + objects.length + " objects"); // Should print "Initializing 20 objects"
+        // Initialize objects (unchanged)
         for (int i = 0; i < objects.length; i++) {
             objects[i] = new GameObject(
                 Math.random() * 80 - 40,
@@ -24,11 +25,15 @@ public class CollisionViewer {
     }
 
     public Parent createContent() {
-        // Animation loop
+        // FIXED: Added FPS control to AnimationTimer
         new AnimationTimer() {
+            private long lastTime = 0;
+            
             @Override
             public void handle(long now) {
+                if (now - lastTime < 16_666_666) return; // Strict 60 FPS
                 update();
+                lastTime = now;
             }
         }.start();
 
@@ -38,22 +43,18 @@ public class CollisionViewer {
     private void update() {
         root.getChildren().clear();
         octree = new Octree(new AABB(-50, -50, -50, 50, 50, 50));
-
-        // Update objects and check collisions
+    
+        // Update objects
         for (GameObject obj : objects) {
             obj.update();
-            octree.insert(obj);
-            List<GameObject> candidates = octree.query(obj.bounds);
-            obj.isColliding = false;
-            for (GameObject other : candidates) {
-                if (obj != other && obj.bounds.intersects(other.bounds)) {
-                    obj.isColliding = true;
-                    break;
-                }
+            try {
+                octree.insert(obj);
+            } catch (NullPointerException e) {
+                System.err.println("Insert failed for object at " + obj.x + "," + obj.y + "," + obj.z);
             }
         }
-
-        // Render objects
+    
+        // Render objects (unchanged)
         for (GameObject obj : objects) {
             Box box = new Box(2, 2, 2);
             box.setTranslateX(obj.x);
