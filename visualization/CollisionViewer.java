@@ -12,7 +12,7 @@ public class CollisionViewer {
     private GameObject[] objects = new GameObject[20];
 
     public CollisionViewer() {//constructor
-        System.out.println("Initializing " + objects.length + " objects"); // Should print "Initializing 20 objects"
+       // System.out.println("Initializing " + objects.length + " objects"); // Should print "Initializing 20 objects"
         // Initialize objects (unchanged)
         for (int i = 0; i < objects.length; i++) {
             objects[i] = new GameObject(
@@ -44,17 +44,22 @@ public class CollisionViewer {
         root.getChildren().clear();
         octree = new Octree(new AABB(-50, -50, -50, 50, 50, 50));
     
-        // Update objects
+        // Update and check collisions
         for (GameObject obj : objects) {
             obj.update();
-            try {
-                octree.insert(obj);
-            } catch (NullPointerException e) {
-                System.err.println("Insert failed for object at " + obj.x + "," + obj.y + "," + obj.z);
+            octree.insert(obj);
+            
+            List<GameObject> candidates = octree.query(obj.bounds);
+            obj.isColliding = false;
+            for (GameObject other : candidates) {
+                if (obj != other && obj.bounds.intersects(other.bounds)) {
+                    obj.isColliding = true;
+                    break;
+                }
             }
         }
     
-        // Render objects (unchanged)
+        // Render objects
         for (GameObject obj : objects) {
             Box box = new Box(2, 2, 2);
             box.setTranslateX(obj.x);

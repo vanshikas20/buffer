@@ -17,7 +17,7 @@ public void start(Stage stage) {
         CollisionViewer viewer = new CollisionViewer();
         Scene scene = new Scene(viewer.createContent(), 800, 600, true);
         PerspectiveCamera camera = new PerspectiveCamera(true);
-        camera.setTranslateZ(-100);
+        camera.setTranslateZ(-60);
         scene.setCamera(camera);
         stage.setScene(scene);
         stage.show();
