@@ -1,10 +1,14 @@
-🚀 3D Space Collision Detection with UI (Java)
-A Java-based 3D collision detection system with a graphical UI to visualize object interactions in space. This project simulates and detects collisions between 3D objects like spheres, cubes, and custom shapes in a real-time environment.
+🧩 Project Description
+This project is a 3D collision detection visualizer built using JavaFX and an Octree spatial partitioning algorithm. It simulates multiple moving 3D objects in space and efficiently detects collisions using Axis-Aligned Bounding Boxes (AABB).
 
-📌 Features
-✅ 3D Object Collision Detection – Detects collisions between multiple objects in space.
-✅ Interactive UI – Visualizes 3D objects and their collisions dynamically.
-✅ Customizable Objects – Users can add, move, and modify objects in real-time.
-✅ Efficient Algorithms – Uses bounding boxes, sphere collision, and AABB techniques for accuracy.
-✅ User-Friendly Controls – Rotate, zoom, and manipulate the 3D view.
+Each frame, objects move randomly within bounds. An Octree divides the 3D space into smaller regions to optimize collision checks. Colliding objects are visually highlighted in red, while non-colliding ones appear blue.
 
+📚 Data Structures Used
+*AABB (Axis-Aligned Bounding Box):
+Used to define the bounding box of each object for fast collision checks.
+
+*Octree:
+A tree data structure that recursively subdivides 3D space into 8 regions, reducing the number of collision checks by spatially grouping objects.
+
+*Array / ArrayList:
+Used to store game objects and manage object lists within each Octree node.
