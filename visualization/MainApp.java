@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
+        // The main() method launches the app. i.e starts javafx 3d application
     }
 
     
@@ -17,9 +18,12 @@ public void start(Stage stage) {
         CollisionViewer viewer = new CollisionViewer();
         Scene scene = new Scene(viewer.createContent(), 800, 600, true);
         PerspectiveCamera camera = new PerspectiveCamera(true);
-        camera.setTranslateZ(-60);
+        //Makes objects look 3D (not flat).
+        camera.setTranslateZ(-50);
+        //moves camera back so we can see the scene(like zooming out)
         scene.setCamera(camera);
         stage.setScene(scene);
+        //displaying everything
         stage.show();
     } catch (Exception e) {
         e.printStackTrace();
